@@ -82,6 +82,7 @@
 				, stretch  : 1
 				, loading  : 'Loading...'
 				, controls : 'Click to drag'
+				, containerScale : 1 // for when it's inside a scaled css container
 			}
 			, zoom    : function ( percent ) {
 				this.percent = Math.max( this.minPercent, Math.min( this.options.stretch, percent ) );
@@ -95,8 +96,8 @@
 			}
 			, drag  : function ( event ) {
 				this.$image.css( {
-					left  : plugin.fill( event.data.image.x + event.pageX - event.data.mouse.x, this.$image.width(), this.options.width )
-					, top : plugin.fill( event.data.image.y + event.pageY - event.data.mouse.y, this.$image.height(), this.options.height )
+					left  : plugin.fill( event.data.image.x + (event.pageX - event.data.mouse.x) * 1 / this.options.containerScale, this.$image.width(), this.options.width )
+					, top : plugin.fill( event.data.image.y + (event.pageY - event.data.mouse.y) * 1/ this.options.containerScale, this.$image.height(), this.options.height )
 				} );
 				this.update();
 			}
